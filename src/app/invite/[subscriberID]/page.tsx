@@ -1,12 +1,20 @@
 import Image from "next/image";
 
-import logo from "../../assets/Logo.svg";
+import logo from "../../../assets/Logo.svg";
 import { InviteLinkInput } from "./invite-link-input";
 import { Ranking } from "./ranking";
 import { Stats } from "./stats";
 
-export default function InvitePage() {
-	const inviteLink = "http://localhost:3000/313912bndios";
+interface InvitePageProps {
+	params: Promise<{
+		subscriberID: string;
+	}>;
+}
+
+export default async function InvitePage(props: InvitePageProps) {
+	const { subscriberID } = await props.params;
+
+	const inviteLink = `http://localhost:3333/invites/${subscriberID}`;
 
 	return (
 		<div className="min-h-dvh flex items-center justify-between gap-16 flex-col md:flex-row">
@@ -15,7 +23,7 @@ export default function InvitePage() {
 
 				<div className="space-y-2">
 					<h1 className="text-4xl font-semibold font-heading text-gray-100 leading-none">
-						Inscrição confirmda!
+						Inscrição confirmada!
 					</h1>
 					<p className="text-gray-300">
 						Para entrar no evento, acesse o link enviado para o seu e-mail.
@@ -35,7 +43,7 @@ export default function InvitePage() {
 
 					<InviteLinkInput inviteLink={inviteLink} />
 
-					<Stats />
+					<Stats subscriberID={subscriberID} />
 				</div>
 			</div>
 
